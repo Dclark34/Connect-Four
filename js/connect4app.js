@@ -328,11 +328,6 @@ column Id to check if the row array has ANY values. If no value exists, the last
 
 
 
-
-
-
-
-
  Notes on line 239 for clickColumn Function:
 
 
