@@ -44,9 +44,9 @@ const messageEl = document.querySelector("#message");
 
 const restartButton = document.querySelector("#restart");
 
-//const redMovesLeft = document.querySelector("#redTeamPieces");
+const redMovesLeft = document.querySelector("#redTeamPieces");
 
-//const blackMovesLeft = document.querySelector("#blackTeamPieces");
+const blackMovesLeft = document.querySelector("#blackTeamPieces");
 
 
 
@@ -72,7 +72,8 @@ function initialize() {
     ['', '', '', '', '', '']];
     turn = "R";
     messageEl.innerText = 'Let\'s Play!';
-    //ADD RENDER
+    redMovesLeft.innerText = `Red Pieces: ${teamMoves.redTeam}`;
+    blackMovesLeft.innerText = `Black Pieces: ${teamMoves.blackTeam}`;
 }
 
 
@@ -83,6 +84,8 @@ function resetBoard() {
     board = [['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', '']];
     turn = `R`;
     messageEl.innerText = `It's ${turn} teams move.`;
+    redMovesLeft.innerText = `Red Pieces: ${redTeamPieces}`;
+    blackMovesLeft.innerText = `Black Pieces: ${blackTeamPieces}`;
     winner = false;
     draw = false;
     initialize();
@@ -94,13 +97,12 @@ function resetBoard() {
 function updateMessage() {
     if (winner === false && draw === false) {
         messageEl.innerHTML = `It's ${turn} teams move.`;
-    } else if (winner === false && teamMoves.redTeam === 0 && teamMoves.blackTeam === 0) {
+    } else if (winner === false && draw === true) {
         messageEl.innerHTML = "DRAW!"
     } else if (winner === true && draw === false) {
         messageEl.innerHTML = `Congrats ${turn} team! You won!`; //way to specify team? like congrats ${turn} team you won!
     }
 }
-
 
 
 //UPDATE BOARD:// need to access COLUMNS first THEN ROWS.
@@ -145,14 +147,44 @@ function switchPlayerTurn() {
     }
 }
 
+//DEDUCT PIECE.
+
+let redTeamPieces;
+let blackTeamPieces;
 
 function deductPiece() {
-    
+    redTeamPieces = teamMoves.redTeam;
+    blackTeamPieces = teamMoves.blackTeam;// cori assisted.
+    for (let col = 0; col < board.length; col ++){
+        for (let row = 0; row < board[col].length; row++){
+            let circleId = board[col][row];
+            if (circleId === 'R') {
+                redTeamPieces -= 1;
+            } if (circleId === 'B') {
+                blackTeamPieces -= 1;
+            }
+        }
+    }
 }
 
 
 
+//UPDATE DISPLAY 
+function updateDisplay() {
+    if (winner === false && draw === false){
+        redMovesLeft.innerText = `Red Pieces: ${redTeamPieces}`;
+        blackMovesLeft.innerText = `Black Pieces: ${blackTeamPieces}`;
+    }
+}
 
+
+//CHECK FOR TIE
+
+function checkForDraw () {
+    if (redTeamPieces === 0 && blackTeamPieces === 0 && winner === false) {
+        draw = true;
+    }
+}
 
 
 //CHECK FOR WINNER
@@ -165,9 +197,8 @@ function checkForWinner() {
                 //Check horizontal win.     
             } if (col <= board.length - 4) { //NOTE ABOUT THIS LINE: cols - 4 means it will look at the next 3 columns and EXCLUDE the 4th. Its not subtracting 4 columns, just creating a hard stop at 3 by excluding the 4th column (it in the intro to arrays lesson)
                 let hCount = 1;
-                // console.log(hCount);
                 for (let i = 1; i <= 3; i++) {
-                    if (board[col + i][row] === currentCircle) { //chatGTP to debug this line. accidentally had a ==+ in this line.
+                    if (board[col + i][row] === currentCircle) { //chatGTP to debug this line. had ==+ instead of ===. 
                         hCount += 1;
                     } else {
                         break;
@@ -179,7 +210,6 @@ function checkForWinner() {
                 // CHECK FOR VERT WIN. 
             } if (row <= board[col].length - 4) {
                 let vCount = 1;
-                //console.log(vCount);
                 for (let i = 1; i <= 3; i++) {
                     if (board[col][row + i] === currentCircle) {
                         vCount += 1;
@@ -219,19 +249,14 @@ function checkForWinner() {
 }
 
 
-//CLICK FUNCTION // this is also your drop piece handler. 
-//Column has been clicked. You hav id for column. You want to use that
-//column Id to check if the row array has ANY values. If no value exists, the last
-// available slot is styled based on the player whose currently playing. If the last spot 
-// DOES have a value, then the next available spot at the END of the array should be styled. 
+//CLICK FUNCTION (also drop piece handler).
 
 const clickColumn = (event) => { /// this is your "handleclick".
     let columnId = parseInt(event.currentTarget.id); //Used chatGPT to debug this line. was getting an error depending on DOM element that was click (column vs circle). 
     let columnCircles = event.currentTarget.querySelectorAll('.circle');
-    //console.log(columnId);
-    //console.log('currentTarget:', event.currentTarget);
-    //console.log('target', event.target);
-    if (columnCircles[5].innerText === '') {
+    if (winner === true) {
+        return;
+    } else if (columnCircles[5].innerText === '') {
         board[columnId][5] = turn;
         columnCircles[5].innerText = turn;
         console.log(board[columnId]);
@@ -245,9 +270,8 @@ const clickColumn = (event) => { /// this is your "handleclick".
         console.log(board[columnId]);
     } else if (columnCircles[2].innerText === '') {
         board[columnId][2] = turn;
-        columnCircles[2].innerText = turn;// HAD TO UPDATE THIS TO ACTUALLY SEE THE UPDATED Values and CHANGE ARRAY. 
+        columnCircles[2].innerText = turn;//Had to update this to innerText from innerHTML to see R or B updates in array.  
         console.log(board[columnId]);
-        //  columnCircles[2].innerText = turn; // will use this later
     } else if (columnCircles[1].innerText === '') {
         board[columnId][1] = turn;
         console.log(board[columnId]);
@@ -258,43 +282,15 @@ const clickColumn = (event) => { /// this is your "handleclick".
         columnCircles[0].innerText = turn;
     } else if (columnCircles.innerText !== '') {
         return;
-
-    }
+    } 
     updateBoard();
+    deductPiece();
+    updateDisplay();
     checkForWinner();
+    checkForDraw();
     switchPlayerTurn();
     updateMessage();
 }
-
-
-
-// WHY currentTarget.id was necessary:
-// currentTarget.id refers to the element the EVENT LISTENER IS ATTACHED TO. 
-// So our eventlistener was attached to our Columns, not the individual circle (which is ideal).
-//However, this meant that if you clicked a circle, it would return UNDEFINED. 
-
-//SO currentTarget.id always gave us the COLUMN, and therefore the correct id was selected,
-// REGARDLESS oof what part inside of the columnn was clicked. 
-
-//original event.target.id was giving us EITHER the column OR the circle. Column was defined,
-// circle was not. This is because event.target refers
-// to the actual DOM element that was clicked. so clicking on the circle with
-// event.target would try and give us the id of the circle divs, which is not the 
-// right value for indexing our board [columnId]. (ASK SAM ABOUT HOW THIS GETS PASSED ON.)
-
-
-// QUESITON FOR SAM: This raises a potential problem. When I click on the array, I get back an
-// array with an updated row. However, when we see it in the dev tools it always says 
-// "prototype.array(0)". Even for columns in the board[columnId[1]]. Will this be a problem
-// later when checking for wins? How will I be able to create those if statements?
-// need circle ids I think for win conditions. 
-
-
-
-
-//UPDATE DISPLAY (will reference object piece count.)
-
-
 
 
 
@@ -323,4 +319,38 @@ const winningCombos = [['0_0', '0_1', '0_2', '0_3', '0_4', '0_5']];
 -DC no longer necessary. Went different route for check win condition based on Jan's suggestion. 
 
 
+click function pseudocode:
+Column has been clicked. You hav id for column. You want to use that
+column Id to check if the row array has ANY values. If no value exists, the last
+ available slot is styled based on the player whose currently playing. If the last spot 
+ DOES have a value, then the next available spot at the END of the array should be styled. 
+
+
+
+
+
+
+
+
+
+ Notes on line 239 for clickColumn Function:
+
+
+ WHY currentTarget.id was necessary:
+
+ currentTarget.id refers to the element the EVENT LISTENER IS ATTACHED TO. Think of it as targeting only the Parent elements,
+ while updating the children. Our eventlistener is attached to our Columns, not the individual circle (which is ideal).
+However, this meant that if you clicked a circle, it would return UNDEFINED. 
+
+SO currentTarget.id always gave us the COLUMN, and therefore the correct id was selected,
+ REGARDLESS oof what part inside of the columnn was clicked. 
+
+original event.target.id was giving us EITHER the column OR the circle. Column was defined,
+circle was not. This is because event.target refers
+to the actual DOM element that was clicked. so clicking on the circle with
+event.target would try and give us the id of the circle divs, which is not the 
+right value for indexing our board [columnId]. (ASK SAM ABOUT HOW THIS GETS PASSED ON.)
+
+
+dead: columnCircles[2].innerText = turn; // will use this later --DC we did not use this later. 
 */
