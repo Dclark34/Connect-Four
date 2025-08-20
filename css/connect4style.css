@@ -1,0 +1,58 @@
+body {
+    background-color: rgba(255, 255, 255, 0.882);
+    font-family: sans-serif, Arial, Helvetica; /*find a fun font for title. Message should be plain*/
+    margin: 0;
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.board {
+    display: flex;
+    width: 75%;
+}
+
+.column {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border: 3px solid black;
+    background-color: #006effdd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: border .5s;
+}
+
+.circle {
+  width: 50%;
+  aspect-ratio: 1/1;
+  border: 3px solid black;
+  text-align: center;
+  border-radius: 50% ;
+  background-color: white;
+  font-size: 60%;
+}
+
+.display {
+    display: flex;
+    justify-content: space-around;
+    width: 500px;
+    border : solid rgb(73, 105, 213);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;
+    padding: 10px 0px;
+    border-radius: 3px;
+}
+
+#restart {
+    background-color: white;
+    color: red;
+    border: 3px solid blue;
+    border-radius: 5%;
+    font-size: 26px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.column:hover {
+    border: 3px solid #ff0000;
+}
