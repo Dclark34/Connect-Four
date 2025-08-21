@@ -1,6 +1,6 @@
 body {
     background-color: rgb(35, 149, 237);
-    font-family: sans-serif, Arial, Helvetica; /*find a fun font for title. Message should be plain*/
+    font-family: sans-serif, Arial, Helvetica;
     color: white;
     margin: 0;
     display : flex;
@@ -8,9 +8,23 @@ body {
     align-items: center;
 }
 
+h1 {
+    font-family: "Candal", Arial, Helvetica, sans-serif;
+    font-size: 64px;
+    text-shadow: 5px 5px black;
+}
+
+h2 {
+    font-family: "Candal", Arial, Helvetica, sans-serif;
+    font-size: 36px;
+    text-shadow: 2px 2px black;
+    margin: 10px 0px 10px 0px;
+}
+
 .board {
     display: flex;
-    width: 75%;
+    width: 800px;
+    box-shadow: 3px 3px #0000005c;
 }
 
 .column {
@@ -25,24 +39,28 @@ body {
 }
 
 .circle {
-  width: 50%;
+  display: flex;
+  justify-content: center;
+  width: 70%;
   aspect-ratio: 1/1;
-  border: 3px solid black;
+  border: 3px solid rgba(0, 0, 0, 0.803);
   text-align: center;
   border-radius: 50% ;
   background-color: white;
-  font-size: 60%;
+  font-size: 32px;
+  font-family: "Candal", Arial, Helvetica, sans-serif;
 }
 
 .display {
     display: flex;
     justify-content: space-around;
     width: 500px;
-    border : solid rgb(255, 255, 255);
-    font-family: Arial, Helvetica, sans-serif;
+    border : 8px solid rgb(19, 68, 133);
+    background-color: white;
+    font-family: "Silkscreen", Arial, Helvetica, sans-serif;
     font-size: 26px;
-    padding: 10px 0px;
-    border-radius: 3px;
+    border-radius: 10px;
+    box-shadow: 3px 3px black;
 }
 
 #restart {
@@ -51,9 +69,21 @@ body {
     border: 3px solid red;
     border-radius: 5%;
     font-size: 26px;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: "Silkscreen", Arial, Helvetica, sans-serif;
 }
 
 .column:hover {
     border: 3px solid #ff0000;
+}
+
+.display div{
+    margin: 10px 20px 10px 20px;
+}
+
+#redTeamPieces{
+    color: red;
+}
+
+#blackTeamPieces {
+    color: black;
 }
