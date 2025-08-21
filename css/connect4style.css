@@ -3,7 +3,7 @@ body {
     font-family: sans-serif, Arial, Helvetica;
     color: white;
     margin: 0;
-    display : flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -18,7 +18,10 @@ h2 {
     font-family: "Candal", Arial, Helvetica, sans-serif;
     font-size: 36px;
     text-shadow: 2px 2px black;
-    margin: 10px 0px 10px 0px;
+}
+
+#message {
+    margin: 0px 0px 20px 0px;
 }
 
 .board {
@@ -36,54 +39,108 @@ h2 {
     flex-direction: column;
     align-items: center;
     transition: border .5s;
+    padding: 10px 0px;
 }
 
 .circle {
-  display: flex;
-  justify-content: center;
-  width: 70%;
-  aspect-ratio: 1/1;
-  border: 3px solid rgba(0, 0, 0, 0.803);
-  text-align: center;
-  border-radius: 50% ;
-  background-color: white;
-  font-size: 32px;
-  font-family: "Candal", Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    aspect-ratio: 1/1;
+    border: 3px solid rgba(0, 0, 0, 0.803);
+    text-align: center;
+    border-radius: 50%;
+    background-color: white;
+    font-size: 3em;
+    font-family: "Candal", Arial, Helvetica, sans-serif;
 }
 
 .display {
     display: flex;
     justify-content: space-around;
     width: 500px;
-    border : 8px solid rgb(19, 68, 133);
+    border: 8px solid rgb(255, 0, 0);
     background-color: white;
     font-family: "Silkscreen", Arial, Helvetica, sans-serif;
     font-size: 26px;
     border-radius: 10px;
-    box-shadow: 3px 3px black;
+    box-shadow: 4px 0 8px black;
+}
+
+#displayTitle {
+    margin: 0px;
 }
 
 #restart {
+    display: flex;
+    justify-content: center;
     background-color: white;
     color: red;
-    border: 3px solid red;
+    border: 5px solid red;
     border-radius: 5%;
     font-size: 26px;
+    padding: 8px 12px;
     font-family: "Silkscreen", Arial, Helvetica, sans-serif;
+    box-shadow: 4px 0 8px black;
 }
 
 .column:hover {
     border: 3px solid #ff0000;
 }
 
-.display div{
+.display div {
     margin: 10px 20px 10px 20px;
 }
 
-#redTeamPieces{
+#redTeamPieces {
     color: red;
 }
 
 #blackTeamPieces {
     color: black;
+}
+
+
+@media (width <=825px) {
+
+    body {
+        height: 100%;
+    }
+
+    h1 {
+        font-size: 200%;
+    }
+
+    h2 {
+        font-size: 130%;
+    }
+
+    .board {
+        width: 85%;
+    }
+
+    .circle {
+        font-size: 1.25em;
+    }
+
+    .display {
+        width: 60%;
+        font-size: 110%;
+    }
+
+    #redTeamPieces {
+        width: 100%;
+        font-size: 80%;
+    }
+
+    #blackTeamPieces {
+        width: 100%;
+        font-size: 80%;
+    }
+
+    #restart {
+        width: 90%;
+        font-size: 90%;
+    }
+
 }

@@ -1,19 +1,3 @@
-//1) Define the required variables used to track the state of the game.
-
-//2) Store cached element references.
-
-//3) Upon loading, the game state should be initialized, and a function should 
-//   be called to render this game state.
-
-//4) The state of the game should be rendered to the user.
-
-//5) Define the required constants.
-
-//6) Handle a player clicking a square with a `dropPiece` function.
-
-
-
-
 
 /*-------------------------------- Constants --------------------------------*/
 
@@ -81,7 +65,13 @@ function initialize() {
 
 //RESET BOARD
 function resetBoard() {
-    board = [['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', ''], ['', '', '', '', '', '']];
+    board = [['', '', '', '', '', ''], 
+             ['', '', '', '', '', ''], 
+             ['', '', '', '', '', ''], 
+             ['', '', '', '', '', ''], 
+             ['', '', '', '', '', ''], 
+             ['', '', '', '', '', ''], 
+             ['', '', '', '', '', '']];
     turn = `R`;
     messageEl.innerText = `It's ${turn} teams move.`;
     redMovesLeft.innerText = `Red Pieces: ${redTeamPieces}`;
@@ -116,11 +106,10 @@ function updateMessage() {
 function updateBoard() {
     for (let col = 0; col < board.length; col++) {
         for (let row = 0; row < board[col].length; row++) {
-            const circleId = `${col}_${row}`; //necessary to take id of each Circle Div and convert it into a string. 
-            // This is because HTML elements are strings. so getElementById (how we'll seelect our circles) will expect a string input.
-            const circle = document.getElementById(circleId);//selects the circle we want based on its id. 
-            const circleValue = board[col][row];// Maps the actuall array of arrays to our board. 
-            if (circleValue === "R") {  //ANOTHER CHANGE, because we now have a map of our values called circleValue. You do not need the .innerText, because the value of board [col][row] will be either R or B.
+            const circleId = `${col}_${row}`; 
+            const circle = document.getElementById(circleId);
+            const circleValue = board[col][row];
+            if (circleValue === "R") {  
                 circle.style.backgroundColor = "red";
                 circle.style.color = "white";
             } else if (circleValue === "B") {
@@ -154,9 +143,9 @@ let blackTeamPieces;
 
 function deductPiece() {
     redTeamPieces = teamMoves.redTeam;
-    blackTeamPieces = teamMoves.blackTeam;// cori assisted.
-    for (let col = 0; col < board.length; col ++){
-        for (let row = 0; row < board[col].length; row++){
+    blackTeamPieces = teamMoves.blackTeam;
+    for (let col = 0; col < board.length; col++) {
+        for (let row = 0; row < board[col].length; row++) {
             let circleId = board[col][row];
             if (circleId === 'R') {
                 redTeamPieces -= 1;
@@ -171,7 +160,7 @@ function deductPiece() {
 
 //UPDATE DISPLAY 
 function updateDisplay() {
-    if (winner === false && draw === false){
+    if (winner === false && draw === false) {
         redMovesLeft.innerText = `Red Pieces: ${redTeamPieces}`;
         blackMovesLeft.innerText = `Black Pieces: ${blackTeamPieces}`;
     }
@@ -180,7 +169,7 @@ function updateDisplay() {
 
 //CHECK FOR TIE
 
-function checkForDraw () {
+function checkForDraw() {
     if (redTeamPieces === 0 && blackTeamPieces === 0 && winner === false) {
         draw = true;
     }
@@ -193,10 +182,9 @@ function checkForWinner() {
         for (let row = 0; row < board[col].length; row++) {
             let currentCircle = board[col][row];
             if (currentCircle === '') {
-                continue; // continue means to skip the current iteration of the loop. (i.e. if circle is empty, skip to next part) MDN.
+                continue; // MDN to find continue. Loop kept stopping here originally.
                 //Check horizontal win.     
-            } if (col <= board.length - 4) { //NOTE ABOUT THIS LINE: cols - 4 means it will look at the next 3 columns and EXCLUDE the 4th. Its not subtracting 4 columns, just creating a hard stop at 3 by excluding the 4th column (it in the intro to arrays lesson)
-                let hCount = 1;
+            } if (col <= board.length - 4) { 
                 for (let i = 1; i <= 3; i++) {
                     if (board[col + i][row] === currentCircle) { //chatGTP to debug this line. had ==+ instead of ===. 
                         hCount += 1;
@@ -232,7 +220,7 @@ function checkForWinner() {
                     return winner = true;
                 }
                 //CHECK DIAG DOWN LEFT                 
-            } if (col >= 3 && row <= board[col].length - 4) { //NOTE col must be >= to 3 because we are checking backwards. Col is established to be the outer arry at 0 (our 0 column). You cant subtract from col because that would be -3 (out of bounds). SO you must be at least 3 columns away from outer columns. 
+            } if (col >= 3 && row <= board[col].length - 4) {
                 let lDownCount = 1;
                 for (let i = 1; i <= 3; i++) {
                     if (board[col - i][row + i] === currentCircle) {
@@ -251,7 +239,7 @@ function checkForWinner() {
 
 //CLICK FUNCTION (also drop piece handler).
 
-const clickColumn = (event) => { /// this is your "handleclick".
+const clickColumn = (event) => { 
     let columnId = parseInt(event.currentTarget.id); //Used chatGPT to debug this line. was getting an error depending on DOM element that was click (column vs circle). 
     let columnCircles = event.currentTarget.querySelectorAll('.circle');
     if (winner === true) {
@@ -259,30 +247,24 @@ const clickColumn = (event) => { /// this is your "handleclick".
     } else if (columnCircles[5].innerText === '') {
         board[columnId][5] = turn;
         columnCircles[5].innerText = turn;
-        console.log(board[columnId]);
     } else if (columnCircles[4].innerText === '') {
         board[columnId][4] = turn;
         columnCircles[4].innerText = turn;
-        console.log(board[columnId]);
     } else if (columnCircles[3].innerText === '') {
         board[columnId][3] = turn;
         columnCircles[3].innerText = turn;
-        console.log(board[columnId]);
     } else if (columnCircles[2].innerText === '') {
         board[columnId][2] = turn;
-        columnCircles[2].innerText = turn;//Had to update this to innerText from innerHTML to see R or B updates in array.  
-        console.log(board[columnId]);
+        columnCircles[2].innerText = turn;
     } else if (columnCircles[1].innerText === '') {
         board[columnId][1] = turn;
-        console.log(board[columnId]);
         columnCircles[1].innerText = turn;
     } else if (columnCircles[0].innerText === '') {
         board[columnId][0] = turn;
-        console.log(board[columnId]);
         columnCircles[0].innerText = turn;
     } else if (columnCircles.innerText !== '') {
         return;
-    } 
+    }
     updateBoard();
     deductPiece();
     updateDisplay();
@@ -318,6 +300,12 @@ const winningCombos = [['0_0', '0_1', '0_2', '0_3', '0_4', '0_5']];
 
 -DC no longer necessary. Went different route for check win condition based on Jan's suggestion. 
 
+CLICK COLUMN NOTES and THINGS I LEARNED:
+
+const clickColumn = (event) => { ///
+    let columnId = parseInt(event.currentTarget.id); //Used chatGPT to debug this line. was getting an error depending on DOM element that was click (column vs circle). 
+    let columnCircles = event.currentTarget.querySelectorAll('.circle');
+
 
 click function pseudocode:
 Column has been clicked. You hav id for column. You want to use that
@@ -325,6 +313,11 @@ column Id to check if the row array has ANY values. If no value exists, the last
  available slot is styled based on the player whose currently playing. If the last spot 
  DOES have a value, then the next available spot at the END of the array should be styled. 
 
+NOTE for 271 -274
+    } else if (columnCircles[2].innerText === '') {
+        board[columnId][2] = turn;
+        columnCircles[2].innerText = turn;  //Had to update this to innerText from innerHTML to see R or B updates in array.  
+        console.log(board[columnId]);
 
 
 
@@ -347,5 +340,91 @@ event.target would try and give us the id of the circle divs, which is not the
 right value for indexing our board [columnId]. (ASK SAM ABOUT HOW THIS GETS PASSED ON.)
 
 
-dead: columnCircles[2].innerText = turn; // will use this later --DC we did not use this later. 
+WIN CONDITION NOTES
+
+CHECK FOR WINNER
+function checkForWinner() {
+    for (let col = 0; col < board.length; col++) {
+        for (let row = 0; row < board[col].length; row++) {
+            let currentCircle = board[col][row];
+            if (currentCircle === '') {
+                continue; // _____________________________continue means to skip the current iteration of the loop. (i.e. if circle is empty, skip to next part) MDN.
+                CHECK HORIZONTAL WIN     
+            } if (col <= board.length - 4) { //NOTE ABOUT THIS LINE: cols - 4 means it will look at the next 3 columns and EXCLUDE the 4th. Its not subtracting 4 columns, just creating a hard stop at 3 by excluding the 4th column (it in the intro to arrays lesson)
+                let hCount = 1;
+                for (let i = 1; i <= 3; i++) {
+                    if (board[col + i][row] === currentCircle) { //chatGTP to debug this line. had ==+ instead of ===. 
+                        hCount += 1;
+                    } else {
+                        break;
+                    }
+                }
+                CHECK DIAG DOWN LEFT                 
+            } if (col >= 3 && row <= board[col].length - 4) { //NOTE_________________ col must be >= to 3 because we are checking backwards. Col is established to be the outer arry at 0 (our 0 column). You cant subtract from col because that would be -3 (out of bounds). SO you must be at least 3 columns away from outer columns. 
+                let lDownCount = 1;
+                for (let i = 1; i <= 3; i++) {
+                    if (board[col - i][row + i] === currentCircle) {
+                        lDownCount += 1;
+                    } else {
+                        break;
+                    }
+                } if (lDownCount === 4) {
+                    return winner = true;
+                }
+            }
+        }
+    }
+}
+
+
+
+UPDATE BOARDN NOTES_________________________________________________________________
+
+PSEUDOCODE:
+ need to access COLUMNS first THEN ROWS.
+ Part of your problem is that you're mixing up DOM elements and strings. EX OLD CODE:
+ let updateRox = board[i][j];
+ if updateRow.innerText === 'R'
+
+ board[j] is a column ARRAY. A list of strings. You can't access it like an actual DOM element. so nothing
+ was changing. were mixing up our strings and DOMS. 
+
+function updateBoard() {
+    for (let col = 0; col < board.length; col++) {
+        for (let row = 0; row < board[col].length; row++) {
+            const circleId = `${col}_${row}`; _____________________________necessary to take id of each Circle Div and convert it into a string. 
+            _______________This is because HTML elements are strings. so getElementById (how we'll seelect our circles) will expect a string input.
+            const circle = document.getElementById(circleId);________________________________selects the circle we want based on its id. 
+            const circleValue = board[col][row];_____________________Maps the actuall array of arrays to our board. 
+            if (circleValue === "R") {  _________________ANOTHER CHANGE, because we now have a map of our values called circleValue. You do not need the .innerText, because the value of board [col][row] will be either R or B.
+                circle.style.backgroundColor = "red";
+                circle.style.color = "white";
+            } else if (circleValue === "B") {
+                circle.style.backgroundColor = "black";
+                circle.style.color = "white";
+            } else {
+                circle.style.backgroundColor = "white";
+                circle.innerText = '';
+            }
+        }
+    }
+}
+
+
+BASIC PSEUDOCODE
+
+//1) Define the required variables used to track the state of the game.
+
+//2) Store cached element references.
+
+//3) Upon loading, the game state should be initialized, and a function should 
+//   be called to render this game state.
+
+//4) The state of the game should be rendered to the user.
+
+//5) Define the required constants.
+
+//6) Handle a player clicking a square with a `dropPiece` function.
+
+
 */
