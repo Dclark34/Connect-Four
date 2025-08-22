@@ -185,6 +185,7 @@ function checkForWinner() {
                 continue; // MDN to find continue. Loop kept stopping here originally.
                 //Check horizontal win.     
             } if (col <= board.length - 4) { 
+                let hCount = 1;
                 for (let i = 1; i <= 3; i++) {
                     if (board[col + i][row] === currentCircle) { //chatGTP to debug this line. had ==+ instead of ===. 
                         hCount += 1;
@@ -413,18 +414,18 @@ function updateBoard() {
 
 BASIC PSEUDOCODE
 
-//1) Define the required variables used to track the state of the game.
+1) Define the required variables used to track the state of the game.
 
-//2) Store cached element references.
+2) Store cached element references.
 
-//3) Upon loading, the game state should be initialized, and a function should 
-//   be called to render this game state.
+3) Upon loading, the game state should be initialized, and a function should 
+   be called to render this game state.
 
-//4) The state of the game should be rendered to the user.
+4) The state of the game should be rendered to the user.
 
-//5) Define the required constants.
+5) Define the required constants.
 
-//6) Handle a player clicking a square with a `dropPiece` function.
+6) Handle a player clicking a square with a `dropPiece` function.
 
 
 */
