@@ -34,6 +34,9 @@ I also wanted to practice manipulating the DOM and iteration over arrays and obj
 4. General Assembly Lessons
 5. Google
 6. Chat GPT 
+7. JavaScript
+8. CSS
+9. HTML
 
 >*Chat GPT was utilized for some minor debugging (one particular one that stumped both the TA and I), as well as a pseudocode brainstorm/breakdown for my horizontal win condition (i.e. how to implement a counter within a loop for a certain condition).*
 
@@ -96,6 +99,7 @@ Divs (our circles) that turn color when a piece is dropped there. Players should
 ## Stretch Goals:
 
 1. Update Message to say *Red* team and *Black* team.
+	*Updated 082225*
 
 2. Move Display and restart buttons to the side of the board on desktop.
 

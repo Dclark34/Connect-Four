@@ -86,7 +86,11 @@ function resetBoard() {
 //UPDATE MESSAGE
 function updateMessage() {
     if (winner === false && draw === false) {
-        messageEl.innerHTML = `It's ${turn} teams move.`;
+        if(turn === "R") {
+           messageEl.innerHTML = `It's ${teamMoves.teamNameR} teams move.`; 
+        } else if (turn === "B") {
+             messageEl.innerHTML = `It's ${teamMoves.teamNameB} teams move.`;
+        }    
     } else if (winner === false && draw === true) {
         messageEl.innerHTML = "DRAW!"
     } else if (winner === true && draw === false) {
