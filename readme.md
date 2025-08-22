@@ -91,3 +91,20 @@ Divs (our circles) that turn color when a piece is dropped there. Players should
 	-***updatePieceCounter (would this be a method for an object or a standalone function? I’m thinking of the depleting
 		poke-balls counter and how I can link something like that to the game logic. Where if your available pieces = 0 => game 		over / draw/ can’t click the board anymore).  
 ```
+
+
+## Stretch Goals:
+
+1. Update Message to say *Red* team and *Black* team.
+
+2. Move Display and restart buttons to the side of the board on desktop.
+
+3. Add win animation (confetti or solitaire win).
+
+4. Improve highlight when hovering over a column. Include highlight on next available circle IN that column.
+
+5. Add animation and sfx of pieces falling out the bottom of board and off screen when the reset button is hit. 
+
+6. Dark mode.
+
+7. Custom colors for pieces. 
